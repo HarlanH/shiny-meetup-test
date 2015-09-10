@@ -12,7 +12,8 @@ shinyUI(fluidPage(
   
   fluidRow(
     htmlOutput("AuthMeetupURL"),
-    textOutput("authCode"),
-    textOutput("accessToken")
+#    textOutput("authCode"),
+    #textOutput("accessToken")
+    htmlOutput("yourmeetups")
   )
 ))

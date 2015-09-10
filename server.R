@@ -1,7 +1,9 @@
 library(shiny)
-
+library(httr)
 
 source("auth.R")
+
+MeetupBaseURL = "https://api.meetup.com"
 
 securityCode <- createCode()
 
@@ -35,4 +37,16 @@ shinyServer(function(input, output, session) {
       a("Log In With Meetup", 
         href=MeetupGetTokenURL(securityCode, redirect.uri=appURL()))
     })
+  
+  output$yourmeetups <- renderUI({
+    tok <- AccessToken()
+    #print(tok)
+    resp <- GET(url=paste0(MeetupBaseURL, "/2/groups"),
+              query=list(member_id="self", only="name,link",
+                         access_token=tok))
+    mus <- content(resp)$results
+    #print(mus)
+    do.call(tags$ul,
+            lapply(mus, function(mu) tags$li(a(mu$name, href=mu$link))))
+  })
 })
