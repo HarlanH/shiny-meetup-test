@@ -14,6 +14,9 @@ shinyUI(dashboardPage(
     htmlOutput("AuthMeetupURL")
   ),
   dashboardBody(
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+    ),
     htmlOutput("yourmeetups")
   )
 ))
