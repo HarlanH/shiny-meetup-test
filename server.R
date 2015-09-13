@@ -1,4 +1,5 @@
 library(shiny)
+library(shinydashboard)
 library(httr)
 
 source("auth.R")
@@ -23,7 +24,7 @@ shinyServer(function(input, output, session) {
   
   AccessToken <- reactive({
       validate(
-        need(AuthCode(), "Authenticate To See")
+        need(AuthCode(), "Log in to see your Meetup groups")
       )
       access_token <- MeetupGetToken(code = AuthCode(), redirect.uri=appURL())
       token <- access_token$access_token
@@ -34,9 +35,14 @@ shinyServer(function(input, output, session) {
   
   #output$appurl <- renderText({appURL()})
   output$AuthMeetupURL <- renderUI({
-      a("Log In With Meetup", 
+    if (isolate(!is.null(AuthCode()))) {
+      "Logged In"
+    } else {
+      a(tags$button("Log In With Meetup"), 
         href=MeetupGetTokenURL(securityCode, redirect.uri=appURL()))
-    })
+      
+    }
+  })
   
   output$yourmeetups <- renderUI({
     tok <- AccessToken()

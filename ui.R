@@ -6,14 +6,14 @@
 #
 
 library(shiny)
+library(shinydashboard)
 
-shinyUI(fluidPage(
-  titlePanel("Shiny Meetup Test App"),
-  
-  fluidRow(
-    htmlOutput("AuthMeetupURL"),
-#    textOutput("authCode"),
-    #textOutput("accessToken")
+shinyUI(dashboardPage(
+  dashboardHeader(title="Shiny Meetup Test App"),
+  dashboardSidebar(
+    htmlOutput("AuthMeetupURL")
+  ),
+  dashboardBody(
     htmlOutput("yourmeetups")
   )
 ))
