@@ -42,6 +42,7 @@ shinyServer(function(input, output, session) {
     } else {
       a(tags$button("Log In With Meetup",
                     type="button", class="btn btn-primary shinybtn"), 
+        target="_top",
         href=MeetupGetTokenURL(securityCode, 
                                redirect.uri=getOption("shiny_meetup_test.redirect_uri")))
       
