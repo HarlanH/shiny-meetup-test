@@ -11,12 +11,23 @@ library(shinydashboard)
 shinyUI(dashboardPage(
   dashboardHeader(title="Shiny Meetup Test App"),
   dashboardSidebar(
-    htmlOutput("AuthMeetupURL")
+    htmlOutput("AuthMeetupURL"),
+    sidebarMenu(
+      menuItem("Meetups", tabName="meetups", icon=icon("smile-o")),
+      menuItem("About", tabName="about", icon=icon("question-circle"))
+    )
   ),
   dashboardBody(
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
     ),
-    htmlOutput("yourmeetups")
+    tabItems(
+      tabItem("meetups",
+              htmlOutput("yourmeetups")),
+      tabItem("about",
+              a(href="https://github.com/HarlanH/shiny-meetup-test/", 
+                        "Source on Github"))
+    )
+    
   )
 ))
